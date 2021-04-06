@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnethelloworld
+spec:
+  selector:
+    matchLabels:
+      run: dotnethelloworld
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: dotnethelloworld
+    spec:
+      containers:
+      - name: dotnethelloworld
+        image: fegomes/dotnethelloworld
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnethelloworld
+  labels:
+    run: dotnethelloworld
+spec:
+  ports:
+  - port: 80
+  selector:
+    run: dotnethelloworld
